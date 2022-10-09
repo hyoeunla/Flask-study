@@ -1,4 +1,5 @@
 # 아래의 줄에 jsonify 추가!
+import imp
 from flask import Flask, jsonify
 from flask_restful import Api
 from dotenv import load_dotenv
@@ -11,7 +12,9 @@ from marshmallow import ValidationError
 # 추가!
 from .db import db
 from .ma import ma
-from .models import user
+from .models import user, post, comment
+
+from .resources.post import PostList, Post
 
 
 def create_app():
@@ -19,6 +22,7 @@ def create_app():
     load_dotenv(".env", verbose=True)
     app.config.from_object("config.dev")
     app.config.from_envvar("APPLICATION_SETTINGS")
+    app.config.update(RESTFUL_JSON=dict(ensure_ascii=False))
     api = Api(app)
 
     # 추가!
@@ -38,5 +42,8 @@ def create_app():
     @app.errorhandler(ValidationError)
     def handle_marshmallow_validation(err):
         return jsonify(err.messages), 400
+
+    api.add_resource(PostList, "/posts/")
+    api.add_resource(Post, "/posts/<int:id>")
 
     return app
