@@ -25,7 +25,7 @@ class UserModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(102), nullable=False)
     email = db.Column(db.String(80), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
@@ -68,6 +68,10 @@ class UserModel(db.Model):
         데이터베이스에서 이름으로 특정 사용자 찾기
         """
         return cls.query.filter_by(username=username).first()
+
+    @classmethod
+    def find_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
 
     @classmethod
     def find_by_id(cls, id):

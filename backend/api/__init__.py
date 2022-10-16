@@ -1,8 +1,7 @@
-# 아래의 줄에 jsonify 추가!
-import imp
 from flask import Flask, jsonify
 from flask_restful import Api
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 # 추가!
 from flask_jwt_extended import JWTManager
@@ -13,12 +12,13 @@ from marshmallow import ValidationError
 from .db import db
 from .ma import ma
 from .models import user, post, comment
-
 from .resources.post import PostList, Post
+from .resources.user import UserRegister
 
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, resources={r"*": {"origins": "*"}})
     load_dotenv(".env", verbose=True)
     app.config.from_object("config.dev")
     app.config.from_envvar("APPLICATION_SETTINGS")
@@ -45,5 +45,6 @@ def create_app():
 
     api.add_resource(PostList, "/posts/")
     api.add_resource(Post, "/posts/<int:id>")
+    api.add_resource(UserRegister, "/register/")
 
     return app
