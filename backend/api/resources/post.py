@@ -45,11 +45,17 @@ class Post(Resource):
         return post_schema.dump(post), 200
 
     @classmethod
+    @jwt_required()
     def delete(cls, id):
         post = PostModel.find_by_id(id)
+        username = get_jwt_identity()
+        author_id = UserModel.find_by_username(username).id
         if post:
-            post.delete_from_db()
-            return {"message": "게시물이 성공적으로 삭제되었습니다."}, 200
+            if post.author_id == author_id:
+                post.delete_from_db()
+                return {"message": "게시물이 성공적으로 삭제되었습니다."}, 200
+            else:
+                return {"Error": "게시물은 작성자만 삭제할 수 있습니다."}, 403
         return {"Error": "게시물을 찾을 수 없습니다."}, 404
 
 
