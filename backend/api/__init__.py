@@ -7,7 +7,10 @@ from flask_cors import CORS
 # 추가!
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
+from flask_uploads import configure_uploads
 from marshmallow import ValidationError
+from api.utils.image_upload import IMAGE_SET
+
 
 # 추가!
 from .db import db
@@ -15,6 +18,7 @@ from .ma import ma
 from .models import user, post, comment
 from .resources.post import PostList, Post
 from .resources.user import UserRegister, UserLogin, RefreshToken
+from .resources.image import PostImageUpload, ProfileImageUpload, Image
 
 
 def create_app():
@@ -29,6 +33,7 @@ def create_app():
     app.config.update(RESTFUL_JSON=dict(ensure_ascii=False))
     api = Api(app)
 
+    configure_uploads(app, IMAGE_SET)
     # 추가!
     jwt = JWTManager(app)
     migrate = Migrate(app, db)
@@ -84,5 +89,8 @@ def create_app():
     api.add_resource(UserRegister, "/register/")
     api.add_resource(UserLogin, "/login/")
     api.add_resource(RefreshToken, "/refresh/")
+    api.add_resource(PostImageUpload, "/upload/post/image/")
+    api.add_resource(ProfileImageUpload, "/upload/profile/image/")
+    api.add_resource(Image, "/statics/<path:path>")
 
     return app

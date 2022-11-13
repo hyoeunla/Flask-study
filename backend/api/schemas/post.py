@@ -2,12 +2,17 @@ import imp
 from api.ma import ma, MethodField
 from api.models.post import PostModel
 from api.models.user import UserModel
+from marshmallow import fields
 
 
 class PostSchema(ma.SQLAlchemyAutoSchema):
     """
     게시물 모델에 관한 직렬화 규칙 정의
     """
+    image = fields.String(required=True)
+
+    created_at = fields.DateTime(format="%Y-%m-%d,%H:%M:%S")
+    updated_at = fields.DateTime(format="%Y-%m-%d,%H:%M:%S")
 
     author_name = MethodField("get_author_name")
 
