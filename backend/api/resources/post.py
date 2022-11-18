@@ -2,6 +2,7 @@ from flask_restful import Resource, request
 from api.models.post import PostModel, db
 from api.models.user import UserModel
 from api.schemas.post import PostSchema
+from marshmallow import ValidationError
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 post_schema = PostSchema()
