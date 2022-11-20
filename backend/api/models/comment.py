@@ -17,7 +17,8 @@ class CommentModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text(), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
-    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True),
+                           default=func.now(), onupdate=func.now())
     author_id = db.Column(db.Integer, db.ForeignKey(
         'User.id', ondelete='CASCADE'), nullable=False)
     author = db.relationship("UserModel", backref="comment_author")
@@ -29,6 +30,11 @@ class CommentModel(db.Model):
         댓글을 데이터베이스에 저장
         """
         db.session.add(self)
+        db.session.commit()
+
+    def update_to_db(self, data):
+        for key, value in data.items():
+            setattr(self, key, value)
         db.session.commit()
 
     def delete_from_db(self):
