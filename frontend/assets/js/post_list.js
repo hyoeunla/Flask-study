@@ -5,6 +5,7 @@ const refreshTokenBseUrl = "http://127.0.0.1:5000/refresh/";
 const profileRetrieveUrl = "http://127.0.0.1:5000/mypage/";
 // localStorage 로부터 토큰을 가져옵니다.
 let ACCESS_TOKEN = localStorage.getItem("access_token");
+console.log(ACCESS_TOKEN);
 let REFRESH_TOKEN = localStorage.getItem("refresh_token");
 /**
  * 액세스 토큰과 리프레시 토큰이 localStorage 에 존재하지 않으면,
@@ -67,20 +68,25 @@ async function getPostListDatafromAPI(page = 1) {
   try {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN}`);
-    myHeaders.append("Content-Type", "application/json");
+
     var requestOptions = {
       method: "GET",
       headers: myHeaders,
+      redirect: "follow",
     };
     let rawResult = await fetch(
-      postListBseUrl + "?page=" + page,
+      "http://127.0.0.1:5000/posts/" + "?page=" + page,
       requestOptions
     );
     // 만약 액세스 토큰이 만료되었다면, 새로운 액세스 토큰을 받아옵니다.
     if (rawResult.status == 401) {
       getNewJWT();
     }
-    rawResult = await fetch(postListBseUrl + "?page=" + page, requestOptions);
+    rawResult = await fetch(
+      "http://127.0.0.1:5000/posts/" + "?page=" + page,
+      requestOptions
+    );
+
     // 만약 리프레시 토큰도 만료되었다면, 로그인 페이지로 리다이렉트 처리합니다.
     if (rawResult.status == 401) {
       window.location.href = "http://localhost:3000/flastagram/login";

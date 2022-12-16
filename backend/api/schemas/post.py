@@ -13,6 +13,15 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
     created_at = fields.DateTime(format="%Y-%m-%d,%H:%M:%S")
     updated_at = fields.DateTime(format="%Y-%m-%d,%H:%M:%S")
     author = fields.Nested(AuthorSchema)
+    liker_count = MethodField("get_liker_count")
+    is_like = MethodField("get_is_like")
+
+    def get_liker_count(self, obj):
+        obj.get_liker_count()
+
+    def get_is_like(self, obj):
+        if self.context.get("user"):
+            return obj.is_like(self.context["user"])
 
     class Meta:
         model = PostModel

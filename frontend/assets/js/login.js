@@ -47,7 +47,9 @@ async function submitLoginData() {
     const refresh_token = loginResponse["refresh_token"];
     localStorage.setItem("access_token", access_token);
     localStorage.setItem("refresh_token", refresh_token);
-    alert(JSON.stringify(loginResponse));
+    console.log(localStorage.getItem("access_token"));
+    //alert(JSON.stringify(loginResponse));
+    window.location.href = "http://127.0.0.1:3000/flastagram/posts";
   } else {
     alert(JSON.stringify(await response.json()));
   }
