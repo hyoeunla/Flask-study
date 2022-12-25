@@ -17,7 +17,7 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
     is_like = MethodField("get_is_like")
 
     def get_liker_count(self, obj):
-        obj.get_liker_count()
+        return obj.get_liker_count()
 
     def get_is_like(self, obj):
         if self.context.get("user"):
