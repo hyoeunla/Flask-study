@@ -6,9 +6,11 @@ let REFRESH_TOKEN = localStorage.getItem("REFRESH_TOKEN");
 const API_SERVER_BASE_URL = "http://127.0.0.1:5000";
 
 // API 서버 기능별 URL
+const RECOMMEND_API_URL = API_SERVER_BASE_URL + "/users/recommend-followers/";
 const POST_LIST_API_URL = API_SERVER_BASE_URL + "/posts/";
 const STATIC_FILES_API_URL = API_SERVER_BASE_URL + "/statics/";
 const LOGIN_API_URL = API_SERVER_BASE_URL + "/login/";
+const SIGNUP_API_URL = API_SERVER_BASE_URL + "/register/";
 const REFRESH_TOKEN_API_URL = API_SERVER_BASE_URL + "/refresh/";
 const MYPAGE_API_URL = API_SERVER_BASE_URL + "/mypage/";
 const POST_IMAGE_UPLOAD_API_URL = API_SERVER_BASE_URL + "/upload/post/image/";
@@ -25,3 +27,7 @@ const PROFILE_FORM_FRONTEND_URL =
 const POST_LIST_FRONTEND_URL = FRONTEND_SERVER_BASE_URL + "/flastagram/posts";
 const POST_CREATE_FRONTEND_URL =
   FRONTEND_SERVER_BASE_URL + "/flastagram/post-create";
+
+const FOLLOW_API_URL = (id) => {
+  return API_SERVER_BASE_URL + `/users/${id}/followers/`;
+};

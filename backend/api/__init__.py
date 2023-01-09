@@ -7,7 +7,7 @@ from flask_cors import CORS
 # 추가!
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
-from flask_uploads import configure_uploads
+from utils.flask_uploads import configure_uploads
 from marshmallow import ValidationError
 from api.utils.image_upload import IMAGE_SET
 
@@ -17,7 +17,7 @@ from .db import db
 from .ma import ma
 from .models import user, post, comment
 from .resources.post import PostLike, PostList, Post
-from .resources.user import UserRegister, UserLogin, RefreshToken, MyPage, Follow
+from .resources.user import UserRegister, UserLogin, RefreshToken, MyPage, Follow, Recommend
 from .resources.image import PostImageUpload, ProfileImageUpload, Image
 from .resources.comment import CommentList, CommentDetail
 
@@ -81,6 +81,9 @@ def create_app():
 
     # 팔로우 API
     api.add_resource(Follow, "/users/<int:id>/followers/")
+
+    # 랜덤추천 API
+    api.add_resource(Recommend, "/users/recommend-followers/")
 
     # 게시물 API
     api.add_resource(PostList, "/posts/")

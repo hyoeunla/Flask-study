@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css?family=Indie+Flower|Overpass+Mono"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/css/login.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/css/signup.css" type="text/css" />
     <title>Login - Flastagram</title>
   </head>
 
@@ -18,7 +18,13 @@
         <div class="header">
           <img src="/assets/img/logo.png" class="brand-img" alt="brand image" />
         </div>
-        <form class="login-form">
+        <form class="signup-form">
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            class="username-input"
+          />
           <input
             type="Email"
             placeholder="Email"
@@ -32,20 +38,21 @@
             class="password-input"
           />
           <input
+            type="password"
+            placeholder="Password Confirm"
+            name="password_confirm"
+            class="password-input"
+          />
+          <input
             type="button"
-            value="Log in"
+            value="Sign Up"
             class="btn"
-            onclick="submitLoginData()"
+            onclick="submitSignupData()"
           />
         </form>
       </div>
-      <div class="sub-content">
-        <div class="s-part">
-          Don't have an account? <a href="signup">Sign up</a>
-        </div>
-      </div>
     </div>
     <script src="/assets/js/utils/variables.js"></script>
-    <script src="/assets/js/auth/login.js"></script>
+    <script src="/assets/js/auth/signup.js"></script>
   </body>
 </html>

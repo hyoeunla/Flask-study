@@ -13,6 +13,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# static
+profile/
+post/
+*.jpg:Zone.Identifier
+
 # C extensions
 *.so
 
